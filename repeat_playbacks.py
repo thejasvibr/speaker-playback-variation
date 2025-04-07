@@ -8,6 +8,7 @@ experiment run over an hour or two.
 Required inputs
 ---------------
 * A WAV file
+* Have to check the sounddevice device number or full string which is there in the output of sounddevice.query_devices()
 * An ASIO-based audio interface
 * A microphone to record the playback
 
@@ -49,6 +50,8 @@ def generate_ISOstyle_time_now():
     return current_timestamp
 
 if __name__ == "__main__":
+    sd.default.device = 32 # or whatever the device string ID is when you check the output of 'sd.query_devices'
+    
     print('hello')
     # how long to run the playbacks in HH:MM:SS
     duration = "00:01:00" 
@@ -72,7 +75,7 @@ if __name__ == "__main__":
     # name by which sounddevice refers to the audio-interface by
     while time.time() <= start_time + hhmmss_to_seconds(duration):
         # Playback and record simultaneously
-        sd.default.device = 32 # or whatever the device string ID is when you check the output of 'sd.query_devices'
+        
         
         print(audio.shape)
         rec_audio = sd.playrec(audio, channels=nchannels, samplerate=fs,
